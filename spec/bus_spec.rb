@@ -23,7 +23,7 @@ RSpec.describe Bus do
     expect(subject.color).to eq color
   end
 
-  it "saves correct number_of_wheels" do
+  it "saves correct default number_of_wheels" do
     expect(subject.number_of_wheels).to eq 4
   end
 
@@ -39,18 +39,36 @@ RSpec.describe Bus do
     expect(subject.passenger_count).to eq 0
   end
 
-  context "when passenger_count is specified" do
+  context "when values are specified" do
     subject do
       described_class.new(plate_number: plate_number,
                           owner_name: owner_name,
                           color: color,
+                          number_of_wheels: number_of_wheels,
+                          tire_size: tire_size,
+                          passenger_capacity: passenger_capacity,
                           passenger_count: passenger_count)
     end
 
+    let(:number_of_wheels) { 8 }
+    let(:tire_size) { "285/70 R19.5" }
+    let(:passenger_capacity) { 200 }
     let(:passenger_count) { 10 }
 
+    it "saves correct number_of_wheels" do
+      expect(subject.number_of_wheels).to eq number_of_wheels
+    end
+
+    it "saves correct tire_size" do
+      expect(subject.tire_size).to eq tire_size
+    end
+
+    it "saves correct passenger_capacity" do
+      expect(subject.passenger_capacity).to eq passenger_capacity
+    end
+
     it "saves correct passenger_count" do
-      expect(subject.passenger_count).to eq 10
+      expect(subject.passenger_count).to eq passenger_count
     end
   end
 
@@ -71,7 +89,7 @@ RSpec.describe Bus do
 
     context "when beyond passenger capacity" do
       it "raises" do
-        expect { subject.load(100) }.to raise_error(ArgumentError)
+        expect { subject.load(101) }.to raise_error(ArgumentError)
       end
     end
   end

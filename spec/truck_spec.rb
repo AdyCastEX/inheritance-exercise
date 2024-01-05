@@ -41,6 +41,34 @@ RSpec.describe Truck do
     expect(subject.trailer_type).to eq trailer_type
   end
 
+  context "when values are specified" do
+    subject do
+      described_class.new(plate_number: plate_number,
+                          owner_name: owner_name,
+                          color: color,
+                          trailer_type: trailer_type,
+                          number_of_wheels: number_of_wheels,
+                          tire_size: tire_size,
+                          passenger_capacity: passenger_capacity)
+    end
+
+    let(:number_of_wheels) { 8 }
+    let(:tire_size) { "295/75R22.5" }
+    let(:passenger_capacity) { 2 }
+
+    it "saves correct number_of_wheels" do
+      expect(subject.number_of_wheels).to eq number_of_wheels
+    end
+
+    it "saves correct tire_size" do
+      expect(subject.tire_size).to eq tire_size
+    end
+
+    it "saves correct passenger_capacity" do
+      expect(subject.passenger_capacity).to eq passenger_capacity
+    end
+  end
+
   describe ".spares" do
     it "returns correct spares" do
       expected = { tire_size: "31x10.50R15/ C109R", trailer_type: trailer_type }
